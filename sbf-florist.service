@@ -1,0 +1,43 @@
+[Unit]
+Description=SBF Florist E-commerce Application
+Documentation=https://github.com/your-repo/SBF
+After=network.target mongodb.service
+Wants=mongodb.service
+Requires=network.target
+
+[Service]
+Type=forking
+User=deploy
+Group=deploy
+WorkingDirectory=/var/www/sbf-florist
+Environment=NODE_ENV=production
+Environment=PORT=5000
+
+# PM2 commands
+ExecStart=/usr/bin/pm2 start ecosystem.config.js --silent
+ExecReload=/usr/bin/pm2 reload ecosystem.config.js --silent
+ExecStop=/usr/bin/pm2 stop ecosystem.config.js --silent
+
+# Process management
+Restart=always
+RestartSec=10
+StartLimitBurst=3
+StartLimitInterval=60
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/www/sbf-florist/server/uploads /var/log/sbf-florist
+
+# Resource limits
+LimitNOFILE=65536
+LimitNPROC=32768
+
+# Health monitoring
+TimeoutStartSec=300
+TimeoutStopSec=30
+
+[Install]
+WantedBy=multi-user.target 

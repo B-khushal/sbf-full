@@ -1,0 +1,152 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp
+.pnp.js
+
+# Production builds
+dist/
+build/
+server/dist/
+sbf-main/dist/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.backup
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+.nyc_output/
+
+# Instrumentation files
+*.lcov
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Typescript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# Next.js build output
+.next
+
+# Nuxt.js build / generate output
+.nuxt
+
+# Gatsby files
+.cache/
+public
+
+# Storybook build outputs
+.out
+.storybook-out
+
+# Temporary folders
+tmp/
+temp/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+._*
+.Spotlight-V100
+.Trashes
+
+# Uploads directory (comment out if you want to track uploads)
+server/uploads/*
+!server/uploads/.gitkeep
+
+# Test files and scripts
+test-*.js
+debug-*.js
+cleanup-*.js
+
+# PM2 logs
+logs/
+*.log
+
+# Database files
+*.sqlite
+*.sqlite3
+*.db
+
+# Docker
+.dockerignore
+
+# SSL certificates
+*.pem
+*.key
+*.crt
+
+# Firebase
+.firebase
+firebase-debug.log
+
+# README files (keeping main ones)
+!README.md
+!DEPLOYMENT_GUIDE.md
+
+# Documentation files (keeping deployment guide)
+*_README.md
+*_FIX_*.md
+*_SETUP.md
+*_IMPLEMENTATION.md
+*_ENHANCEMENT*.md
+fix-status.txt
+debug-admin-notifications.html
+test-admin-currency.js
+
+# Backup files
+*.backup
+*.bak 
