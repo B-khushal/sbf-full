@@ -1,6 +1,6 @@
 // API Configuration - Production settings
-export const API_URL = import.meta.env.VITE_API_URL || 'https://sbflorist.in/api';
-export const UPLOADS_URL = import.meta.env.VITE_UPLOADS_URL || 'https://sbflorist.in';
+export const API_URL = import.meta.env.VITE_API_URL || 'https://www.sbflorist.in/api';
+export const UPLOADS_URL = import.meta.env.VITE_UPLOADS_URL || 'https://www.sbflorist.in';
 
 // Utility function to construct proper image URLs with Cloudinary optimization
 export const getImageUrl = (imagePath: string | undefined, options?: {

@@ -162,7 +162,7 @@ const AdminNavbar = () => {
       console.log('Testing CORS connection...');
       
       // Test direct fetch to backend
-              const response = await fetch('https://sbflorist.in/cors-test', {
+              const response = await fetch('https://www.sbflorist.in/cors-test', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -218,7 +218,7 @@ const AdminNavbar = () => {
                     <>
                       <div className="font-semibold text-green-600">✅ Connection Active</div>
                       <div><strong>Status:</strong> Backend Online</div>
-                      <div><strong>Backend URL:</strong> https://sbflorist.in</div>
+                      <div><strong>Backend URL:</strong> https://www.sbflorist.in</div>
                       <div><strong>Mode:</strong> Live (MongoDB + API)</div>
                       <div><strong>Notifications:</strong> {notifications.length} loaded</div>
                       {lastSyncTime && (
@@ -240,7 +240,7 @@ const AdminNavbar = () => {
                       <div><strong>Status:</strong> Backend Unavailable</div>
                       <div><strong>Issue:</strong> CORS Policy Error</div>
                       <div><strong>Solution:</strong> Backend needs redeployment</div>
-                      <div><strong>Backend URL:</strong> https://sbflorist.in</div>
+                      <div><strong>Backend URL:</strong> https://www.sbflorist.in</div>
                       <div><strong>Current Mode:</strong> Offline (localStorage)</div>
                       <div><strong>Notifications:</strong> {notifications.length} loaded locally</div>
                       {lastSyncTime && (

@@ -254,6 +254,15 @@ const AdminProducts: React.FC = () => {
     return total;
   };
 
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    const target = e.target as HTMLImageElement;
+    if (product.images && product.images.length > 0) {
+      target.src = `https://www.sbflorist.in${product.images[0]}`;
+    } else {
+      target.src = `https://www.sbflorist.in/uploads/${product.images[0]}`;
+    }
+  };
+
   return (
     <div className="container mx-auto py-6">
       <div className="flex justify-between items-center mb-6">
@@ -575,9 +584,9 @@ const AdminProducts: React.FC = () => {
                                 // Try different URL constructions if the first one fails
                                 if (!target.src.includes('placeholder')) {
                                   if (product.images?.[0]?.startsWith('/uploads/')) {
-                                                            target.src = `https://sbflorist.in${product.images[0]}`;
-                      } else if (product.images?.[0] && !product.images[0].startsWith('http')) {
-                        target.src = `https://sbflorist.in/uploads/${product.images[0]}`;
+                                                            target.src = `https://www.sbflorist.in${product.images[0]}`;
+                                  } else if (product.images?.[0] && !product.images[0].startsWith('http')) {
+                        target.src = `https://www.sbflorist.in/uploads/${product.images[0]}`;
                                   } else {
                                     target.src = "/images/placeholder.jpg";
                                   }

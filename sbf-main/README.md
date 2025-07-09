@@ -1,4 +1,4 @@
-# SBF Florist - Frontend
+# SBF Florist Frontend
 
 A modern, responsive e-commerce platform for SBF Florist, built with React, TypeScript, and Tailwind CSS.
 
@@ -86,8 +86,8 @@ This project is built with modern web technologies:
 
 ### Environment Variables for Production
 ```env
-VITE_API_URL=https://sbflorist.in/api
-VITE_UPLOADS_URL=https://sbflorist.in
+VITE_API_URL=https://www.sbflorist.in/api
+VITE_UPLOADS_URL=https://www.sbflorist.in
 ```
 
 ## 📁 Project Structure

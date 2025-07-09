@@ -3,7 +3,9 @@
  * This service pings the backend periodically to keep it active
  */
 
-const BACKEND_URL = 'https://sbflorist.in';
+import axios from 'axios';
+
+const BACKEND_URL = 'https://www.sbflorist.in';
 const WAKE_UP_INTERVAL = 14 * 60 * 1000; // 14 minutes (before 15-minute sleep threshold)
 
 let wakeUpInterval: NodeJS.Timeout | null = null;
@@ -14,16 +16,15 @@ const wakeUpBackend = async (): Promise<boolean> => {
   try {
     console.log('⏰ Pinging backend to prevent sleep...');
     
-    const response = await fetch(`${BACKEND_URL}/wake-up`, {
-      method: 'GET',
+    const response = await axios.get(`${BACKEND_URL}/wake-up`, {
       headers: {
         'Content-Type': 'application/json',
       },
       // Don't send credentials for wake-up calls to avoid auth issues
     });
 
-    if (response.ok) {
-      const data = await response.json();
+    if (response.status === 200) {
+      const data = response.data;
       console.log('✅ Backend wake-up successful:', data.message);
       console.log(`🕐 Server uptime: ${Math.floor(data.uptime / 60)} minutes`);
       return true;
