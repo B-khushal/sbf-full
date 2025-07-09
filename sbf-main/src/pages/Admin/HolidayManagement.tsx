@@ -40,6 +40,7 @@ import {
 import { Calendar } from '@/components/ui/calendar';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/hooks/use-auth';
 import { format } from 'date-fns';
 import { CalendarIcon, Plus, Edit, Trash2, Eye, Filter, Download, Upload, RefreshCw } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -47,6 +48,7 @@ import holidayService, { Holiday, CreateHolidayData, HolidayStats } from '@/serv
 
 const HolidayManagement: React.FC = () => {
   const { toast } = useToast();
+  const { user } = useAuth();
   const [holidays, setHolidays] = useState<Holiday[]>([]);
   const [stats, setStats] = useState<HolidayStats | null>(null);
   const [loading, setLoading] = useState(true);
@@ -82,7 +84,9 @@ const HolidayManagement: React.FC = () => {
       setLoading(true);
       const response = await holidayService.getAllHolidays({
         year: selectedYear,
-        ...filters
+        category: filters.category || undefined,
+        type: filters.type || undefined,
+        isActive: filters.isActive === 'true' ? true : filters.isActive === 'false' ? false : undefined
       });
       
       if (response.success) {
