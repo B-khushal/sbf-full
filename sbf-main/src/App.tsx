@@ -57,6 +57,7 @@ const AdminSettingsPage = lazy(() => import("./pages/AdminSettingsPage"));
 const Analytics = lazy(() => import("./pages/Admin/Analytics"));
 const PromoCodes = lazy(() => import("./pages/Admin/PromoCodes"));
 const OffersManager = lazy(() => import("./pages/Admin/OffersManager"));
+const HolidayManagement = lazy(() => import("./pages/Admin/HolidayManagement"));
 const ProductForm = lazy(() => import('@/pages/Admin/ProductForm'));
 const UserViewPage = lazy(() => import('./pages/Admin/UserViewPage'));
 const UserEditPage = lazy(() => import('./pages/Admin/UserEditPage'));
@@ -302,6 +303,11 @@ const App = () => {
                             <Route path="offers" element={
                               <Suspense fallback={<LoadingFallback message="Loading offers..." />}>
                                 <OffersManager />
+                              </Suspense>
+                            } />
+                            <Route path="holidays" element={
+                              <Suspense fallback={<LoadingFallback message="Loading holidays..." />}>
+                                <HolidayManagement />
                               </Suspense>
                             } />
                             <Route path="settings" element={

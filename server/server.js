@@ -79,6 +79,7 @@ const startServer = async () => {
     app.use('/api/offers', require('./routes/offerRoutes'));
     app.use('/api/vendors', require('./routes/vendorRoutes'));
     app.use('/api/reviews', require('./routes/reviewRoutes')); // Review system enabled
+    app.use('/api/holidays', require('./routes/holidayRoutes')); // Holiday management
     app.use('/wake-up', require('./routes/wakeUpRoutes'));
     app.use('/api/settings', settingsRoutes);
     app.use('/api/newsletter', newsletterRoutes);
