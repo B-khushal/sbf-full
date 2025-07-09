@@ -1,67 +1,83 @@
 #!/bin/bash
 
-# Exit on any error
-set -e
+# SBF Florist Deployment Script for Hostinger
+# This script builds the project and uploads it to the server
 
-echo "🚀 Starting deployment to Hostinger..."
+set -e  # Exit on any error
 
-# Variables
-DEPLOY_PATH="/home/u947451575/domains/sbflorist.in"
-BACKEND_PATH="$DEPLOY_PATH/backend"
-FRONTEND_PATH="$DEPLOY_PATH/public_html"
-LOG_DIR="/home/u947451575/logs/sbf"
+# Configuration
+SERVER_IP="147.93.102.196"
+SERVER_USER="root"
+SERVER_PATH="/var/www/sbf-florist/"
+PROJECT_DIR="sbf-main"
 
-# Create necessary directories
-echo "📁 Creating directories..."
-mkdir -p "$BACKEND_PATH"
-mkdir -p "$LOG_DIR"
+echo "🚀 Starting SBF Florist deployment to Hostinger..."
 
-# Stop existing PM2 process
-echo "🛑 Stopping existing PM2 process..."
-pm2 stop sbf-backend || true
-pm2 delete sbf-backend || true
-
-# Kill any existing Node processes
-echo "🔪 Killing existing Node processes..."
-pkill -f "node" || true
-
-# Copy backend files
-echo "📋 Copying backend files..."
-cp -r ./server/* "$BACKEND_PATH/"
-cp ecosystem.config.js "$BACKEND_PATH/"
-
-# Install backend dependencies
-echo "📦 Installing backend dependencies..."
-cd "$BACKEND_PATH"
-npm install --production
-
-# Build and copy frontend files
-echo "🏗️ Building frontend..."
-cd ../sbf-main
-npm install
-npm run build
-cp -r dist/* "$FRONTEND_PATH/"
-
-# Start the backend with PM2
-echo "🚀 Starting backend with PM2..."
-cd "$BACKEND_PATH"
-pm2 start ecosystem.config.js --env production
-
-# Wait for server to start
-echo "⏳ Waiting for server to start..."
-sleep 5
-
-# Check if server is running
-if pm2 show sbf-backend | grep -q "online"; then
-    echo "✅ Deployment successful! Server is running."
-else
-    echo "❌ Deployment failed! Server is not running."
-    pm2 logs sbf-backend --lines 50
+# Check if we're in the right directory
+if [ ! -d "$PROJECT_DIR" ]; then
+    echo "❌ Error: $PROJECT_DIR directory not found!"
+    echo "Please run this script from the project root directory."
     exit 1
 fi
 
-# Save PM2 process list
-echo "💾 Saving PM2 process list..."
-pm2 save
+# Navigate to the frontend directory
+cd "$PROJECT_DIR"
 
-echo "✨ Deployment complete!" 
+echo "📦 Installing dependencies..."
+npm install
+
+echo "🔨 Building the project..."
+npm run build
+
+# Check if build was successful
+if [ ! -d "dist" ]; then
+    echo "❌ Error: Build failed! dist directory not found."
+    exit 1
+fi
+
+echo "✅ Build completed successfully!"
+
+# Upload to server
+echo "📤 Uploading to Hostinger server..."
+echo "Server: $SERVER_USER@$SERVER_IP"
+echo "Path: $SERVER_PATH"
+
+# Create backup of current deployment
+echo "💾 Creating backup of current deployment..."
+ssh "$SERVER_USER@$SERVER_IP" "if [ -d '$SERVER_PATH' ]; then cp -r $SERVER_PATH ${SERVER_PATH}backup-$(date +%Y%m%d-%H%M%S); fi"
+
+# Upload the dist folder
+echo "📤 Uploading dist folder..."
+scp -r dist "$SERVER_USER@$SERVER_IP:$SERVER_PATH"
+
+# Set proper permissions
+echo "🔐 Setting proper permissions..."
+ssh "$SERVER_USER@$SERVER_IP" "chmod -R 755 $SERVER_PATH && chown -R www-data:www-data $SERVER_PATH"
+
+# Restart nginx if needed
+echo "🔄 Restarting nginx..."
+ssh "$SERVER_USER@$SERVER_IP" "systemctl reload nginx"
+
+echo "✅ Deployment completed successfully!"
+echo ""
+echo "🌐 Your application should now be live at:"
+echo "   https://sbflorist.in"
+echo ""
+echo "📋 Deployment Summary:"
+echo "   - Frontend: ✅ Deployed"
+echo "   - Build: ✅ Completed"
+echo "   - Upload: ✅ Successful"
+echo "   - Permissions: ✅ Set"
+echo "   - Nginx: ✅ Reloaded"
+echo ""
+echo "🔍 To check the deployment:"
+echo "   ssh $SERVER_USER@$SERVER_IP"
+echo "   cd $SERVER_PATH"
+echo "   ls -la"
+echo ""
+echo "📝 Recent changes deployed:"
+echo "   - Fixed Google Sign-In button width issues"
+echo "   - Resolved FedCM errors"
+echo "   - Increased file upload limits to 50MB"
+echo "   - Enhanced Cloudinary upload optimization"
+echo "   - Improved error handling and logging" 

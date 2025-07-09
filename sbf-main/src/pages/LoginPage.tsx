@@ -7,9 +7,9 @@ import { Label } from '@/components/ui/label';
 import { Eye, EyeOff, LogIn, UserPlus, Mail, Lock, ArrowRight, Sparkles, CheckCircle, User } from 'lucide-react';
 import { useAuth } from '@/hooks/use-auth';
 import { useToast } from '@/hooks/use-toast';
-import { GoogleLogin } from '@react-oauth/google';
 import { Checkbox } from '@/components/ui/checkbox';
 import Modal from '@/components/ui/Modal';
+import GoogleSignInButton from '@/components/ui/GoogleSignInButton';
 
 // Animation variants
 const containerVariants = {
@@ -685,16 +685,10 @@ const LoginPage = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 }}
                 >
-                  <GoogleLogin
+                  <GoogleSignInButton
                     onSuccess={handleGoogleSuccess}
                     onError={handleGoogleError}
-                    useOneTap
-                    theme="outline"
-                    size="large"
-                    text={isLoginMode ? "signin_with" : "signup_with"}
-                    shape="rectangular"
-                    locale="en"
-                    width="100%"
+                    isLoginMode={isLoginMode}
                   />
                 </motion.div>
 

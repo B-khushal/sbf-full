@@ -32,7 +32,7 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({ 
   storage, 
   fileFilter, 
-  limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
+  limits: { fileSize: 50 * 1024 * 1024 } // 50MB limit
 });
 
 // @route   GET /api/uploads/test
@@ -42,10 +42,18 @@ router.get("/test", (req, res) => {
   res.json({ 
     message: "Upload endpoint is accessible",
     timestamp: new Date().toISOString(),
+    limits: {
+      fileSize: "50MB",
+      allowedTypes: ["jpg", "jpeg", "png", "webp"]
+    },
     cloudinary: {
       cloud_name: process.env.CLOUDINARY_CLOUD_NAME ? 'Configured' : 'Missing',
       api_key: process.env.CLOUDINARY_API_KEY ? 'Configured' : 'Missing',
       api_secret: process.env.CLOUDINARY_API_SECRET ? 'Configured' : 'Missing'
+    },
+    server: {
+      bodyLimit: "50MB",
+      uploadTimeout: "60s"
     }
   });
 });
@@ -72,6 +80,12 @@ router.post("/", protect, admin, (req, res, next) => {
   upload.single("image")(req, res, (err) => {
     if (err instanceof multer.MulterError) {
       console.error('❌ Multer error:', err);
+      if (err.code === 'LIMIT_FILE_SIZE') {
+        return res.status(413).json({ 
+          message: "File too large. Maximum size is 50MB.", 
+          error: err.message 
+        });
+      }
       return res.status(400).json({ 
         message: "File upload error", 
         error: err.message 

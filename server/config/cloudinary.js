@@ -25,7 +25,7 @@ const uploadToCloudinary = async (buffer, filename) => {
         public_id: filename.split('.')[0], // Use filename without extension
         transformation: [
           {
-            width: 1000,
+            width: 1200,
             crop: "scale"
           },
           {
@@ -34,7 +34,10 @@ const uploadToCloudinary = async (buffer, filename) => {
           {
             fetch_format: "auto"
           }
-        ]
+        ],
+        // Add timeout and retry options
+        timeout: 60000, // 60 seconds timeout
+        chunk_size: 6000000, // 6MB chunks for large files
       },
       (error, result) => {
         if (error) {
@@ -42,7 +45,7 @@ const uploadToCloudinary = async (buffer, filename) => {
           reject(error);
         } else {
           console.log('✅ Cloudinary upload success:', result.secure_url);
-          console.log('📐 Image transformations applied: width=1000, quality=auto, format=auto');
+          console.log('📐 Image transformations applied: width=1200, quality=auto, format=auto');
           resolve(result);
         }
       }
