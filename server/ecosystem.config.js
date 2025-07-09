@@ -8,7 +8,8 @@ module.exports = {
     max_memory_restart: '1G',
     env_production: {
       NODE_ENV: 'production',
-      PORT: 5001
+      PORT: 5001,
+      MONGODB_URI: 'mongodb+srv://khushalprasad242:ddkka2006@cluster0.qxae3.mongodb.net/test?'
     },
     error_file: '/var/log/sbf/error.log',
     out_file: '/var/log/sbf/out.log',
