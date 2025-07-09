@@ -26,9 +26,6 @@ const app = express();
 // --- Comprehensive CORS Configuration ---
 const corsOptions = {
   origin: [
-    'http://localhost:8080',
-    'http://localhost:3000', 
-    'http://localhost:5173',
     'https://sbflorist.in',
     'https://www.sbflorist.in'
   ],
