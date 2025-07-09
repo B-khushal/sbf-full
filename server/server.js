@@ -30,8 +30,7 @@ const corsOptions = {
     'http://localhost:3000', 
     'http://localhost:5173',
     'https://sbflorist.in',
-    'https://www.sbflorist.in',
-    'https://sbf-backend.onrender.com'
+    'https://www.sbflorist.in'
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
@@ -107,8 +106,7 @@ app.get('/health', (req, res) => {
         'http://localhost:3000', 
         'http://localhost:5173',
         'https://sbflorist.in',
-        'https://www.sbflorist.in',
-        'https://sbf-backend.onrender.com'
+        'https://www.sbflorist.in'
       ]
     }
   });
