@@ -3,7 +3,7 @@
  * This service pings the backend periodically to keep it active
  */
 
-const BACKEND_URL = 'https://sbf-backend.onrender.com';
+const BACKEND_URL = 'https://sbflorist.in';
 const WAKE_UP_INTERVAL = 14 * 60 * 1000; // 14 minutes (before 15-minute sleep threshold)
 
 let wakeUpInterval: NodeJS.Timeout | null = null;

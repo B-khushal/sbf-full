@@ -1,7 +1,6 @@
-// API Configuration - Using local backend for development testing
-// For production: export const API_URL = import.meta.env.VITE_API_URL || 'https://sbf-backend.onrender.com/api';
-export const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-export const UPLOADS_URL = import.meta.env.VITE_UPLOADS_URL || 'http://localhost:5000';
+// API Configuration - Production settings
+export const API_URL = import.meta.env.VITE_API_URL || 'https://sbflorist.in/api';
+export const UPLOADS_URL = import.meta.env.VITE_UPLOADS_URL || 'https://sbflorist.in';
 
 // Utility function to construct proper image URLs with Cloudinary optimization
 export const getImageUrl = (imagePath: string | undefined, options?: {

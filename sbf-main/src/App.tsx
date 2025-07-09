@@ -115,7 +115,7 @@ const App = () => {
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
-        <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID || "your-google-client-id"}>
+        <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID || "246004709667-1a33cbkt2b2hq2m1foav1b3j4fsvilef.apps.googleusercontent.com"}>
           <AuthProvider>
             <CartLoader />
             <CurrencyProvider>

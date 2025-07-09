@@ -5,7 +5,7 @@ A modern, responsive e-commerce platform for SBF Florist, built with React, Type
 ## 🚀 Live Demo
 
 - **Frontend**: https://www.sbflorist.in
-- **Backend API**: https://sbf-backend.onrender.com
+- **Backend API**: https://sbflorist.in
 
 ## 📦 Repositories
 
@@ -45,10 +45,10 @@ Create a `.env` file in the root directory with the following variables:
 
 ```env
 # API Configuration
-VITE_API_URL=https://sbf-backend.onrender.com/api
+VITE_API_URL=https://sbflorist.in/api
 
 # Upload/Image Configuration  
-VITE_UPLOADS_URL=https://sbf-backend.onrender.com/uploads
+VITE_UPLOADS_URL=https://sbflorist.in
 
 # App Configuration
 VITE_APP_NAME=SBF Florist
@@ -86,8 +86,8 @@ This project is built with modern web technologies:
 
 ### Environment Variables for Production
 ```env
-VITE_API_URL=https://sbf-backend.onrender.com/api
-VITE_UPLOADS_URL=https://sbf-backend.onrender.com/uploads
+VITE_API_URL=https://sbflorist.in/api
+VITE_UPLOADS_URL=https://sbflorist.in
 ```
 
 ## 📁 Project Structure
@@ -120,4 +120,4 @@ This project is licensed under the MIT License.
 
 - **Backend Repository**: [https://github.com/B-khushal/sbf-backend](https://github.com/B-khushal/sbf-backend)
 - **Live Website**: [https://www.sbflorist.in](https://www.sbflorist.in)
-- **API Documentation**: [https://sbf-backend.onrender.com/health](https://sbf-backend.onrender.com/health)
+- **API Documentation**: [https://sbflorist.in/health](https://sbflorist.in/health)

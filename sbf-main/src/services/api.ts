@@ -3,7 +3,7 @@ import { toast } from '../hooks/use-toast';
 
 // Create an axios instance with base URL and default headers
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'https://sbf-backend.onrender.com/api',
+  baseURL: import.meta.env.VITE_API_URL || 'https://sbflorist.in/api',
   timeout: 15000, // Reduced from 30s to 15s for better UX
   maxRedirects: 0, // Prevent redirect issues
   maxContentLength: 1000000, // Increase max payload size
