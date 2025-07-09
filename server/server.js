@@ -25,15 +25,32 @@ const app = express();
 
 // --- Comprehensive CORS Configuration ---
 const corsOptions = {
-  origin: [
-    'https://sbflorist.in',
-    'https://www.sbflorist.in'
-  ],
+  origin: function(origin, callback) {
+    const allowedOrigins = [
+      'https://sbflorist.in',
+      'https://www.sbflorist.in',
+      'http://localhost:8080',
+      'http://localhost:3000',
+      'http://localhost:5173'
+    ];
+    
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV !== 'production') {
+      callback(null, true);
+    } else {
+      console.warn(`⚠️ Blocked request from unauthorized origin: ${origin}`);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
+  exposedHeaders: ['Content-Range', 'X-Content-Range'],
   preflightContinue: false,
-  optionsSuccessStatus: 200
+  optionsSuccessStatus: 204,
+  maxAge: 86400 // 24 hours
 };
 
 app.use(cors(corsOptions));
@@ -88,6 +105,14 @@ app.get('/', (req, res) => {
 
 // Health check endpoint
 app.get('/health', (req, res) => {
+  const allowedOrigins = [
+    'https://sbflorist.in',
+    'https://www.sbflorist.in',
+    'http://localhost:8080',
+    'http://localhost:3000',
+    'http://localhost:5173'
+  ];
+
   res.status(200).json({
     status: 'OK',
     message: 'Server is healthy',
@@ -98,13 +123,7 @@ app.get('/health', (req, res) => {
     cors: {
       enabled: true,
       origin: req.get('Origin') || 'No Origin',
-      allowedOrigins: [
-        'http://localhost:8080',
-        'http://localhost:3000', 
-        'http://localhost:5173',
-        'https://sbflorist.in',
-        'https://www.sbflorist.in'
-      ]
+      allowedOrigins: allowedOrigins
     }
   });
 });
@@ -135,15 +154,30 @@ app.use((req, res, next) => {
   const origin = req.get('Origin');
   if (origin) {
     console.log(`🌐 Request from origin: ${origin} to ${req.method} ${req.path}`);
+    // Add Vary header to prevent caching issues
+    res.vary('Origin');
   }
   next();
 });
 
 // Serve uploaded files with proper CORS headers
 app.use('/uploads', (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  const origin = req.get('Origin');
+  const allowedOrigins = [
+    'https://sbflorist.in',
+    'https://www.sbflorist.in',
+    'http://localhost:8080',
+    'http://localhost:3000',
+    'http://localhost:5173'
+  ];
+
+  if (origin && (allowedOrigins.includes(origin) || process.env.NODE_ENV !== 'production')) {
+    res.header('Access-Control-Allow-Origin', origin);
+  }
+  res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.vary('Origin');
   next();
 }, express.static(path.join(__dirname, 'uploads')));
 
