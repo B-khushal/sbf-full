@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 import { Calendar } from '@/components/ui/calendar';
 import * as Popover from '@radix-ui/react-popover';
 import { Button } from '@/components/ui/button';
-import { format, addDays, isBefore, startOfDay, isValid } from 'date-fns';
+import { format, addDays, isBefore, startOfDay, isValid, isSameDay } from 'date-fns';
 import { useCurrency } from '@/contexts/CurrencyContext';
 
 export type TimeSlot = {
@@ -48,6 +48,11 @@ const DEFAULT_TIME_SLOTS: TimeSlot[] = [
   }
 ];
 
+const OPTIONAL_DAYS: Date[] = [
+  // Example: new Date(2025, 9, 2), // October 2, 2025 (month is 0-indexed)
+  // Add more dates as needed
+];
+
 type TimeSlotSelectorProps = {
   selectedSlot: string | null;
   onSelectSlot: (slotId: string) => void;
@@ -72,9 +77,14 @@ const TimeSlotSelector = ({
   
   // Create a minimum date for the calendar (today)
   const today = startOfDay(new Date());
-  
-  // Create a maximum date for the calendar (30 days from today)
-  const maxDate = addDays(today, 30);
+
+  // Create a maximum date for the calendar (December 31st of current year)
+  const endOfYear = new Date(today.getFullYear(), 11, 31); // December is month 11
+
+  // Function to check if a date is an optional (excluded) day
+  const isOptionalDay = (date: Date) => {
+    return OPTIONAL_DAYS.some((d) => isSameDay(d, date));
+  };
   
   // Sync date state with selectedDate prop
   useEffect(() => {
@@ -230,13 +240,14 @@ const TimeSlotSelector = ({
               )}
             </Button>
           </Popover.Trigger>
-          <Popover.Content side="bottom" align="start" className="z-50 bg-white rounded-lg shadow-lg p-2 mt-2">
+          <Popover.Content side="bottom" align="start" className="z-[9999] bg-white rounded-lg shadow-lg p-2 mt-2">
             <Calendar
               mode="single"
               selected={date || undefined}
               onSelect={handleDateSelect}
               fromDate={today}
-              toDate={maxDate}
+              toDate={endOfYear}
+              disabled={isOptionalDay}
               initialFocus
             />
           </Popover.Content>
