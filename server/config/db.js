@@ -12,10 +12,11 @@ const connectDB = async () => {
     const conn = await mongoose.connect(mongoURI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      // Only use SSL if it's a cloud connection
+      // Only use TLS if it's a cloud connection
       ...(mongoURI.includes('mongodb+srv') ? {
-        ssl: true,
-        sslValidate: false, // Temporary for debugging
+        tlsAllowInvalidCertificates: false,
+        retryWrites: true,
+        w: 'majority'
       } : {})
     });
 
